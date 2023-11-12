@@ -1,18 +1,26 @@
-#include <stdio.h>
-#include <math.h>
+#include<stdio.h>
+#include<math.h>
 
-#define PI 3.14159265
+#define pi 3.14159265358979323846
+#define N 1000000000.0
 
-int main() {
-    double m1 = 3.0, lambda1 = 530e-9, theta1 = 65.0;
-    double m2 = 2.0, lambda2 = 700e-9;
-    double d, theta2;
+int main()
+{
+    double t1, t2, l1, l2, d; ///l = Lemda, t = Theta.
 
-    theta1 = theta1 * PI / 180.0;
-    d = m1 * lambda1 / sin(theta1);
-    theta2 = asin(m2 * lambda2 / d);
-    theta2 = theta2 * 180.0 / PI;
-    printf("The second-order bright spot for red light will be at %.2f degrees.\n", theta2);
+    int m1, m2;
+
+    l1 = 530 / N;
+    l2 = 700 / N;
+
+    t1 = 65.0 * (pi / 180.0);
+    m1 = 3;
+    m2 = 2;
+
+    d = (m1 * l1) / sin(t1);
+    t2 = asin((m2 * l2)/d);
+
+    printf("At %lf angle will the second order bright spot before red light", (t2 * (180/pi)));
 
     return 0;
 }
