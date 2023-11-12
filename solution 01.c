@@ -1,41 +1,61 @@
-#include <stdio.h>
-#include <math.h>
+#include<stdio.h>
+#include<math.h>
 
-int main() {
-    double lambda, m, a1, a2, a3, theta1, theta2, theta3;
+#define N 1000000
 
-    printf("Enter the value of wavelength (in nm): ");
-    scanf("%lf", &lambda);
-    if (lambda <= 380 || lambda >= 750) {
-        printf("Out of the range. Please enter a valid number.\n");
-        return 1;
+int main()
+{
+    double l, t[3], a[3]; /// l = Lemda, t = Theta.
+    int m;
+
+    while(1)
+    {
+        printf("Enter the value of Lemda: ");
+        scanf("%lf", &l);
+        
+        if(l < 380 || l > 750)
+        {
+            printf("Out of the range. Please enter a valid number\n");
+        }
+        else
+        {
+            break;
+        }
     }
 
-    printf("Enter the value of 'm' : ");
-    scanf("%lf", &m);
+    printf("Enter the value of m: ");
+    scanf("%d", &m);
 
-    printf("Enter the values of 'a' for three cases (in micrometers):\n");
-    scanf("%lf %lf %lf", &a1, &a2, &a3);
+    printf("Enter the 3 value of a: ");
+    for(int i = 0; i < 3; i++)
+    {
+        double k;
+        scanf("%lf", &k);
+        k /= N;
+        a[i] = k;
+    }
+    
+    l = l / 1000000000;
 
-    double sin_theta1, sin_theta2, sin_theta3;
-    sin_theta1 = ((lambda * 1e-9)*(m)) / (a1*1e-6);
-    sin_theta2 = ((lambda * 1e-9)*(m)) / (a2*1e-6);
-    sin_theta3 = ((lambda * 1e-9)*(m)) / (a3*1e-6);
+    t[0] = asin((m * l) / a[0]);
+    t[1] = asin((m * l) / a[1]);
+    t[2] = asin((m * l) / a[2]);
 
-    theta1 = (asin(sin_theta1)*180)/3.1416;
-    theta2 = (asin(sin_theta2)*180)/3.1416;
-    theta3 = (asin(sin_theta3)*180)/3.1416;
-
-    printf("For a1 = %lf, theta = %lf degree\n", a1, theta1);
-    printf("For a2 = %lf, theta = %lf degree\n", a2, theta2);
-    printf("For a3 = %lf, theta = %lf degree\n\n", a3, theta3);
-
-    if (theta1 > theta2 && theta1 > theta3) {
-        printf("Slit a1=%lf will bent the light more.\n",a1);
-    } else if (theta2 > theta1 && theta2 > theta3) {
-        printf("Slit a2=%lf will bent the light more.\n",a2);
-    } else {
-        printf("Slit a3=%lf will bent the light more.\n",a3);
+    if(t[0] >= t[2] && t[0] >= t[1])
+    {
+        printf("%lf would bent the light most.\n", (a[0] * N));
+    }
+    else if(t[2] >= t[1] && t[2] >= t[0])
+    {
+        printf("%lf would bent the light most.\n", (a[2] * N));
+    }
+    else if(t[1] >= t[2] && t[1] >= t[0])
+    {
+        printf("%lf would bent the light most.\n", (a[1] * N));
+    }
+    else
+    {
+        printf("m * lemda / a is greater then 1.\n");
     }
 
     return 0;
